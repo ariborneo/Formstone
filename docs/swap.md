@@ -2,19 +2,31 @@
 
 A jQuery plugin for toggling states.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Events](#events)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Swap
+
 
 #### Main
 
 ```markup
 swap.js
 ```
+
 
 #### Dependencies
 
@@ -26,7 +38,7 @@ mediaquery.js
 
 ### Basic
 
-Swap toggles classes on groups of elements based on configuration options and user interaction. It is up to the developer to utilize the classes.
+Swap toggles classes on groups of elements based on configuration options and user interaction. It is up to the developer to utilize the classes. 
 
 ```javascript
 $(".target").swap();
@@ -39,7 +51,7 @@ $(".target").swap();
 
 ### Groups
 
-Swaps can be grouped together for a simple accordions or tabs.
+Swaps can be grouped together for a simple accordions or tabs using the `data-swap-group` attribute.
 
 ```markup
 <h4>Grouped</h4>
@@ -52,15 +64,15 @@ Swaps can be grouped together for a simple accordions or tabs.
 
 ### Linked
 
-Swaps can be linked together for multiple handles.
+Swaps can be linked together for multiple handles using the `data-swap-linked` attribute.
 
 ```markup
 <h4>Grouped</h4>
-<div class="target" data-swap-target=".toggle_1" data-swap-group="linked_1">Handle - 1</div>
+<div class="target" data-swap-target=".toggle_1" data-swap-linked="linked_1">Handle - 1</div>
 
 <div class="toggle_1">Target - 1</div>
 
-<div class="target" data-swap-target=".toggle_1" data-swap-group="linked_1">Handle - 2</div>
+<div class="target" data-swap-target=".toggle_1" data-swap-linked="linked_1">Handle - 2</div>
 ```
 
 ### Max Width
@@ -69,7 +81,7 @@ Swaps will auto-enable and disable themselves if the `maxWidth` property is set.
 
 ```javascript
 $(".target").swap({
-	maxWidth: "740px"
+  maxWidth: "740px"
 });
 ```
 
@@ -79,6 +91,9 @@ $(".target").swap({
 ```
 
 
+
+<a name="options"></a>
+
 ## Options
 
 Set instance options by passing a valid object at initialization, or to the public `defaults` method. Custom options for a specific instance can also be set by attaching a `data-swap-options` attribute to the target elment. This attribute should contain the properly formatted JSON object representing the custom options.
@@ -87,6 +102,9 @@ Set instance options by passing a valid object at initialization, or to the publ
 | --- | --- | --- | --- |
 | `collapse` | `boolean` | `true` | Allow swap to collapse it's target |
 | `maxWidth` | `string` | `Infinity` | Width at which to auto-disable plugin |
+
+<hr>
+<a name="events"></a>
 
 ## Events
 
@@ -98,6 +116,9 @@ Events are triggered on the target instance's element, unless otherwise stated.
 | `deactivate.swap` | Swap deactivated |
 | `enable.swap` | Swap enabled |
 | `disable.swap` | Swap diabled |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -156,6 +177,9 @@ Enables instance.
 ```javascript
 $(".target").swap("enable");
 ```
+
+<hr>
+<a name="css"></a>
 
 ## CSS
 

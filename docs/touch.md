@@ -2,19 +2,31 @@
 
 A jQuery plugin for multi-touch events.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Events](#events)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Touch
+
 
 #### Main
 
 ```markup
 touch.js
 ```
+
 
 #### Dependencies
 
@@ -43,13 +55,13 @@ Pan can be used for building touch-friendly draggable interfaces:
 
 ```javascript
 $(".target").touch({
-	pan: true
+  pan: true
 }).on("panstart", function(e) {
-	console.log("Started panning");
+  console.log("Started panning");
 }).on("pan", function(e) {
-	console.log("Panning");
+  console.log("Panning");
 }).on("panend", function(e) {
-	console.log("Stopped panning");
+  console.log("Stopped panning");
 });
 ```
 
@@ -59,9 +71,9 @@ Swipe can be used for building touch-friendly swipable interfaces:
 
 ```javascript
 $(".target").touch({
-	swipe: true
+  swipe: true
 }).on("swipe", function(e) {
-	console.log("Swiped");
+  console.log("Swiped");
 });
 ```
 
@@ -71,17 +83,20 @@ Scale can be used for building touch-friendly scalable interfaces:
 
 ```javascript
 $(".target").touch({
-	scale: true
+  scale: true
 }).on("scalestart", function(e) {
-	console.log("Started scaling");
+  console.log("Started scaling");
 }).on("scale", function(e) {
-	console.log("Scaling");
+  console.log("Scaling");
 }).on("scaleend", function(e) {
-	console.log("Stopped scaling");
+  console.log("Stopped scaling");
 });
 ```
 
 Note: `pan`, `swipe` and `scale` can also be used together to create a rich interface.
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -93,6 +108,9 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `pan` | `boolean` | `false` | Pan events |
 | `scale` | `boolean` | `false` | Scale events |
 | `swipe` | `boolean` | `false` | Swipe events |
+
+<hr>
+<a name="events"></a>
 
 ## Events
 
@@ -107,6 +125,9 @@ Events are triggered on the target instance's element, unless otherwise stated.
 | `scale` | Scaling |
 | `scaleend` | Scaling ended |
 | `swipe` | Swipe |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -133,6 +154,9 @@ Removes plugin instance.
 ```javascript
 $(".target").touch("destroy");
 ```
+
+<hr>
+<a name="css"></a>
 
 ## CSS
 

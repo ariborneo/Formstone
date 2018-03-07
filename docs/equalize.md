@@ -2,18 +2,30 @@
 
 A jQuery plugin for equal dimensions.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Equalize
+
 
 #### Main
 
 ```markup
 equalize.js
 ```
+
 
 #### Dependencies
 
@@ -33,9 +45,9 @@ $(".target").equalize();
 
 ```markup
 <div class="target">
-	<div>...</div>
-	<div>...</div>
-	<div>...</div>
+  <div>...</div>
+  <div>...</div>
+  <div>...</div>
 </div>
 ```
 
@@ -45,21 +57,21 @@ Specify a valid `target` selector to equalize specific child elements:
 
 ```javascript
 $(".target").equalize({
-	target: ".child"
+  target: ".child"
 });
 ```
 
 ```markup
 <div class="target">
-	<div>
-		<p class="child">...</p>
-	</div>
-	<div>
-		<p class="child">...</p>
-	</div>
-	<div>
-		<p class="child">...</p>
-	</div>
+  <div>
+    <p class="child">...</p>
+  </div>
+  <div>
+    <p class="child">...</p>
+  </div>
+  <div>
+    <p class="child">...</p>
+  </div>
 </div>
 ```
 
@@ -69,9 +81,12 @@ Set the `protperty` to width to Equalize the widths of elements, rather than hei
 
 ```javascript
 $(".target").equalize({
-	property: "width"
+  property: "width"
 });
 ```
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -83,6 +98,9 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `minWidth` | `string` | `'0'` | Width at which to auto-disable plugin |
 | `property` | `string` | `"height"` | Property to size; 'height' or 'width' |
 | `target` | `string OR array` | `null` | Target child selector(s); Defaults to direct descendants |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -133,6 +151,9 @@ Resizes instance
 ```javascript
 $(".target").equalize("resize");
 ```
+
+<hr>
+<a name="css"></a>
 
 ## CSS
 

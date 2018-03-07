@@ -2,12 +2,23 @@
 
 A jQuery plugin for replacing checkboxes.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Checkbox
+
 
 #### Main
 
@@ -15,6 +26,7 @@ A jQuery plugin for replacing checkboxes.
 checkbox.js
 checkbox.css
 ```
+
 
 #### Dependencies
 
@@ -33,12 +45,12 @@ $("input[type=checkbox], input[type=radio]").checkbox();
 
 ```markup
 <fieldset>
-	<label for="check_1">Checkbox</label>
-	<input type="checkbox" name="check_1" id="check_1" value="on">
+  <label for="check_1">Checkbox</label>
+  <input type="checkbox" name="check_1" id="check_1" value="on">
 </fieldset>
 <fieldset>
-	<label for="radio_1">Radio</label>
-	<input type="radio" name="radio_1" id="radio_1" value="on">
+  <label for="radio_1">Radio</label>
+  <input type="radio" name="radio_1" id="radio_1" value="on">
 </fieldset>
 ```
 
@@ -48,9 +60,12 @@ Checkbox can also render a 'toggle' style checkbox.
 
 ```javascript
 $("input[type=checkbox]").checkbox({
-	toggle: true
+  toggle: true
 });
 ```
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -62,6 +77,10 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `toggle` | `boolean` | `false` | Render 'toggle' styles |
 | `labels.on` | `string` | `'ON'` | Label for 'On' position; 'toggle' only |
 | `labels.off` | `string` | `'OFF'` | Label for 'Off' position; 'toggle' only |
+| `theme` | `string` | `"fs-light"` | Theme class name |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -91,6 +110,9 @@ Updates target instance
 $(".target").checkbox("update");
 ```
 
+<hr>
+<a name="css"></a>
+
 ## CSS
 
 | Class | Type | Description |
@@ -102,7 +124,6 @@ $(".target").checkbox("update");
 | `.fs-checkbox.fs-checkbox-toggle` | `modifier` | Indicates toggle interface |
 | `.fs-checkbox.fs-checkbox-focus` | `modifier` | Indicates focused state |
 | `.fs-checkbox.fs-checkbox-disabled` | `modifier` | Indicates disabled state |
-| `.fs-checkbox-enabled` | `modifier` | Indicates enabled state |
 | `.fs-checkbox-label` | `element` | Label element |
 | `.fs-checkbox-marker` | `element` | Marker element |
 | `.fs-checkbox-flag` | `element` | Flag element |

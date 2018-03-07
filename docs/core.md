@@ -2,14 +2,24 @@
 
 Formstone Library core. Required for all plugins.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Methods](#methods)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Core
 
 ### Formstone Object
 
-The Formstone core is a dependency of all javascript based components and will contain a few global values, as well as a simple plugin factory. The global Formstone object has access to the following keys:
+The Formstone core is a dependency of all JavaScript based components and will contain a few global values, as well as a simple plugin factory. The global Formstone object has access to the following keys:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -47,16 +57,32 @@ The `Formstone.Plugin` factory function is used to define a plugin. The factory 
 
 ```javascript
 $(".target").plugin({
-	option: value
+  option: value
 });
 ```
 
-### No Conflict
+#### AMD Support
 
-One benefit of Formstone is the module nature of the components, allowing developers to include only what's required. Certain edge cases may require overlapping namespaces between two or more libraries. To avoid (some) namespace collisions with other libraries, such as Bootstrap or Lightbox, developers can call the `Formstone.NoConflict()` method to restore all jQuery plugin namespaces to their 'original' functions. Other libraries should be included before Formstone components, however Formstone will remember this flag and avoid registering un-namespaced plugins included after the initial call. Note: This does not effect data attributes or events, only the jQuery plugin namespace. 
+Plugins should remain compatible with module loaders like [RequireJS](http://requirejs.org/) or [webpack](https://webpack.github.io/):
 
 ```javascript
-Formstone.NoConflict();
+(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define([
+      "jquery",
+      "./core",
+      "./dependency",
+    ], factory);
+  } else {
+    factory(jQuery, Formstone);
+  }
+}(function($, Formstone) {
+
+  // Plugin
+
+})
+
+);
 ```
 
 ### Plugin Types
@@ -68,66 +94,82 @@ There are two types of plugins that can be defined: Widget or Utility.
 Widget plugins are implicitly tied to an element to enhance or change the interface. Examples of Widgets include input enhancements like Checkbox or Dropdown. A simple Widget might look like:
 
 ```javascript
-;(function ($, Formstone, undefined) {
+/* global define */
 
-	function setUp() {
-		// this = document
-	}
+(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define([
+      "jquery",
+      "./core",
+      "./dependency",
+    ], factory);
+  } else {
+    factory(jQuery, Formstone);
+  }
+}(function($, Formstone) {
 
-	function construct(data) {
-		// this = jQuery wrapped target element
-		// data = instance data
-	}
+  "use strict";
 
-	function destruct(data) {
-		// this = jQuery wrapped target element
-		// data = instance data
-	}
+  function setup() {
+    // this = document
+  }
 
-	function reset(data) {
-		// this = jQuery wrapped target element
-		// data = instance data
-	}
+  function construct(data) {
+    // this = jQuery wrapped target element
+    // data = instance data
+  }
 
-	// Register Plugin
+  function destruct(data) {
+    // this = jQuery wrapped target element
+    // data = instance data
+  }
 
-	var Plugin = Formstone.Plugin("namespace", {
-			widget: true,
-			defaults: {
-				option:    value
-			},
-			classes: [
-				"visible"
-			],
-			methods: {
-				_setup         : setup,
-				_construct     : construct,
-				_postConstruct : construct,
-				_destruct      : destruct,
-				_resize        : resize,
-				_raf           : raf,
+  function reset(data) {
+    // this = jQuery wrapped target element
+    // data = instance data
+  }
 
-				reset          : reset
-			},
-			utilities: {
-				close:         close
-			}
-		}),
+  // Register Plugin
 
-		// Localize References
+  var Plugin = Formstone.Plugin("namespace", {
+      widget: true,
+      defaults: {
+        option:    value
+      },
+      classes: [
+        "visible"
+      ],
+      methods: {
+        _construct     : construct,
+        _postConstruct : construct,
+        _destruct      : destruct,
+        _resize        : resize,
+        _raf           : raf,
 
-		Classes      = Plugin.classes,
-		Events       = Plugin.events,
-		Functions    = Plugin.functions;
+        reset          : reset
+      },
+      utilities: {
+        close:         close
+      }
+    }),
 
-})(jQuery, Formstone);
+    // Localize References
+
+    Classes      = Plugin.classes,
+    Events       = Plugin.events,
+    Functions    = Plugin.functions;
+
+  Formstone.Ready(setup);
+
+})
+
+);
 ```
 
-As in the example above, Widgets can override three internal methods by pointing a key to the corresponding local function:
+As in the example above, Widgets can override the following internal methods by pointing a key to the corresponding local function:
 
 | Method | Description |
 | --- | --- |
-| `_setup` | Run once when document is ready, scoped to document |
 | `_construct` | Run at initialization of each instance, scoped to specific instance |
 | `_postConstruct` | Run after initialization of current instance set, scoped to specific instance |
 | `_destruct` | Run at destruction of each instance, scoped to specific instance |
@@ -140,7 +182,7 @@ When an instance is created or destroyed, the factory will automatically add or 
 this.data("namespace");
 ```
 
-Custom public methods can also be defined, provided their keys are not prefixed with an underscore (`_`). The underscore signifies a core method and should be avoided when defining public methods. The factory will scope any public method call to the target instance, as well as provide it's plugin data as the first argument followed by any addition arguments:
+Custom public methods can also be defined, provided their keys are not prefixed with an underscore (`_`). The underscore signifies a core method and should be avoided when defining public methods. The factory will scope any public method call to the target instance, as well as provide it's plugin data as the first argument followed by any additional arguments:
 
 ```javascript
 $(".target").namespace("reset", 500);
@@ -153,31 +195,46 @@ A Widget can also operate as a singleton, like Lightbox or Tooltip. In this case
 Utility plugins may interact with DOM nodes but are not necessarily tied to any specific elements. An example of a Utility is the media query event abstraction provided by Media Query. A simple Utility plugin might look like:
 
 ```javascript
-;(function ($, Formstone, undefined) {
+/* global define */
 
-	function delegate() {
-		// Manually handle public methods
-	}
+(function(factory) {
+  if (typeof define === "function" && define.amd) {
+    define([
+      "jquery",
+      "./core"
+    ], factory);
+  } else {
+    factory(jQuery, Formstone);
+  }
+}(function($, Formstone) {
 
-	// Register Plugin
+  "use strict";
 
-	var Plugin = Formstone.Plugin("namespace", {
-			utilties: {
-				_delegate:     delegate
-			}
-		}),
+  function delegate() {
+    // Manually handle public methods
+  }
 
-		// Internal Defaults
+  // Register Plugin
 
-		Defaults = {
-			option    : value
-		},
+  var Plugin = Formstone.Plugin("namespace", {
+      utilties: {
+        _delegate:     delegate
+      }
+    }),
 
-		// Localize References
+    // Internal Defaults
 
-		Document = Formstone.$document[0];
+    Defaults = {
+      option    : value
+    },
 
-})(jQuery, Formstone);
+    // Localize References
+
+    Document = Formstone.$document[0];
+
+})
+
+);
 ```
 
 A utility can override the default method delegation by pointing the `_delegate` key to a custom function. The delegate function will need to manually handle any arguments passed. Otherwise, Utilities will use the same public method delegation system as Widgets.
@@ -205,14 +262,14 @@ These values can then be localized in the scope of the plugin for optimal minimi
 
 ```javascript
 var Plugin = Formstone.Plugin(“namespace”, {
-		...
-	}),
-	Defaults     = Plugin.defaults,
-	Functions    = Plugin.functions,
-	Methods      = Plugin.methods,
-	Utilities    = Plugin.utilities,
-	Classes      = Plugin.classes,
-	Events       = Plugin.events;
+    ...
+  }),
+  Defaults     = Plugin.defaults,
+  Functions    = Plugin.functions,
+  Methods      = Plugin.methods,
+  Utilities    = Plugin.utilities,
+  Classes      = Plugin.classes,
+  Events       = Plugin.events;
 ```
 
 This may seem strangely redundant at first, however multi-dimensional objects do not minimize efficiently. This is also one reason standard prototypal inheritance is not used when building a plugin, however this is not to say a specific plugin could not contain locally scoped prototypes. Plugin design is always up to the developer, the factory simply provides a consistent, DRY approach to the basic plugin pattern.
@@ -223,12 +280,12 @@ The `classes` object returned when defining a plugin will contain properly names
 
 ```javascript
 var Plugin = Formstone.Plugin(“namespace”, {
-	...
-	classes: [
-		"visible",
-		"content"
-	],
-	...
+  ...
+  classes: [
+    "visible",
+    "content"
+  ],
+  ...
 });
 ```
 
@@ -255,12 +312,12 @@ The `events` object returned when defining a plugin will contain properly namesp
 
 ```javascript
 var Plugin = Formstone.Plugin(“namespace”, {
-	...
-	events: [
-		"enable",
-		"disable"
-	],
-	...
+  ...
+  events: [
+    "enable",
+    "disable"
+  ],
+  ...
 });
 ```
 
@@ -317,6 +374,28 @@ data.$el.on(Events.click, onClick);
 | `touchStart` | Default | `touchstart.namespace` |
 | `transitionEnd` | Default | `transitionEnd.namespace` |
 
+### Document Ready
+
+Changes introduced to the `ready` event handler in jQuery 3 can cause a flash of unstyled content before widget plugins have completely initialized. The `Formstone.Ready` handler utilizes the native 'DOMContentLoaded' event to avoid the flash and can be safely used a jQuery `ready` replacement:
+
+```javascript
+Formstone.Ready(function() {
+  ...
+});
+```
+
+### No Conflict
+
+One benefit of Formstone is the module nature of the components, allowing developers to include only what's required. Certain edge cases may require overlapping namespaces between two or more libraries. To avoid (some) namespace collisions with other libraries, such as Bootstrap or Lightbox, developers can call the `Formstone.NoConflict()` method to restore all jQuery plugin namespaces to their 'original' functions. Other libraries should be included before Formstone components, however Formstone will remember this flag and avoid registering un-namespaced plugins included after the initial call. Note: This does not effect data attributes or events, only the jQuery plugin namespace.
+
+```javascript
+Formstone.NoConflict();
+```
+
+
+<hr>
+<a name="methods"></a>
+
 ## Methods
 
 ### NoConflict
@@ -341,4 +420,15 @@ Formstone.Plugin("namespace", { ... });
 | --- | --- | --- | --- |
 | `namespace` | `string` | &nbsp; | Plugin namespace |
 | `settings` | `object` | &nbsp; | Plugin settings |
+
+### Ready
+
+Replacement for jQuery ready
+
+
+#### Parameters
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `e` | `object` | &nbsp; | Event data |
 

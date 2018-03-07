@@ -2,18 +2,30 @@
 
 A jQuery plugin for CSS transition events.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Transition
+
 
 #### Main
 
 ```markup
 transition.js
 ```
+
 
 #### Dependencies
 
@@ -28,7 +40,7 @@ Transition provides a predictable interface for moving to CSS based animations:
 
 ```javascript
 $(".target").transition(function() {
-	...
+  ...
 }).addClass("visible");
 ```
 
@@ -38,9 +50,12 @@ Transitions can manually resolved, which will immediately fire the associated ca
 
 ```javascript
 if (shouldResolve) {
-	$(".target").transition("resolve");
+  $(".target").transition("resolve");
 }
 ```
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -51,6 +66,9 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `always` | `boolean` | `False` | Flag to always react to transition end (.on vs .one) |
 | `property` | `string` | `null` | Property to react to |
 | `target` | `string` | `null` | Target child selector |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -85,6 +103,9 @@ Resolves current transition end events.
 ```javascript
 $(".target").transition("resolve");
 ```
+
+<hr>
+<a name="css"></a>
 
 ## CSS
 

@@ -2,12 +2,23 @@
 
 A jQuery plugin for custom scrollbars.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Scrollbar
+
 
 #### Main
 
@@ -15,6 +26,7 @@ A jQuery plugin for custom scrollbars.
 scrollbar.js
 scrollbar.css
 ```
+
 
 #### Dependencies
 
@@ -34,7 +46,7 @@ $(".target").scrollbar();
 
 ```markup
 <div class="target">
-	<p>...</p>
+  <p>...</p>
 </div>
 ```
 
@@ -42,9 +54,12 @@ $(".target").scrollbar();
 
 ```javascript
 $(".target").scrollbar({
-	horizontal: true
+  horizontal: true
 });
 ```
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -55,9 +70,13 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `customClass` | `string` | `''` | Class applied to instance |
 | `duration` | `int` | `0` | Scroll animation length |
 | `handleSize` | `int` | `0` | Handle size; 0 to auto size |
-| `horizontal` | `boolean` | `false` | Flag to scroll horizontally |
+| `horizontal` | `boolean` | `false` | Scroll horizontally |
 | `mouseWheel` | `boolean` | `true` | Flag to prevent scrolling of parent element |
+| `theme` | `string` | `"fs-light"` | Theme class name |
 | `trackMargin` | `int` | `0` | &nbsp; |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -107,6 +126,9 @@ $(".target").scrollbar("scroll", position, duration);
 | --- | --- | --- | --- |
 | `position` | `string or int` | `null` | Target element selector or static position |
 | `duration` | `int` | `null` | Optional scroll duration |
+
+<hr>
+<a name="css"></a>
 
 ## CSS
 

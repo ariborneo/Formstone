@@ -2,12 +2,23 @@
 
 A jQuery plugin for custom select elements.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Dropdown
+
 
 #### Main
 
@@ -16,12 +27,14 @@ dropdown.js
 dropdown.css
 ```
 
+
 #### Dependencies
 
 ```markup
 jQuery
 core.js
-scrollbar.js
+scrollbar.js (optional)
+touch.js (optional, for scrollbar)
 ```
 
 ### Basic
@@ -34,9 +47,9 @@ $("select").dropdown();
 
 ```markup
 <select>
-	<option value="1">One</option>
-	<option value="2">Two</option>
-	<option value="3">Three</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
 </select>
 ```
 
@@ -46,7 +59,7 @@ React to changes to the element's value by listening for the standard `change` e
 
 ```javascript
 $("select").on("change", function() {
-	var value = $(this).val();
+  var value = $(this).val();
 });
 ```
 
@@ -57,6 +70,9 @@ $("select").val(1).trigger("change");
 ```
 
 Note: If the select is too close to the bottom edge of the `body` tag, the dropdown options will "flip" and display above the handle.
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -70,8 +86,13 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `label` | `string` | `''` | Label displayed before selection |
 | `external` | `boolean` | `false` | Open options as links in new window |
 | `links` | `boolean` | `false` | Open options as links in same window |
-| `mobile` | `boolean` | `false` | Force desktop interaction on mobile |
+| `native` | `boolean` | `false` | Use native browser options |
+| `theme` | `string` | `"fs-light"` | Theme class name |
 | `trim` | `int` | `0` | &nbsp; |
+| `selectMultiple` | `boolean` | `false` | &nbsp; |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -151,6 +172,9 @@ Updates instance.
 $(".target").dropdown("update");
 ```
 
+<hr>
+<a name="css"></a>
+
 ## CSS
 
 | Class | Type | Description |
@@ -163,6 +187,7 @@ $(".target").dropdown("update");
 | `.fs-dropdown.fs-dropdown-disabled` | `modifer` | Indicates disabled state |
 | `.fs-dropdown.fs-dropdown-open` | `modifer` | Indicates open state |
 | `.fs-dropdown.fs-dropdown-focus` | `modifer` | Indicates focus state |
+| `.fs-dropdown.fs-dropdown-native` | `modifer` | Indicates native options |
 | `.fs-dropdown-selected` | `element` | Handle item |
 | `.fs-dropdown-options` | `element` | Options container |
 | `.fs-dropdown-group` | `element` | Option group label |

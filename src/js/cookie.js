@@ -1,154 +1,167 @@
-;(function ($, Formstone, undefined) {
+/* global define */
 
-	"use strict";
+(function(factory) {
+    if (typeof define === "function" && define.amd) {
+      define([
+        "jquery",
+        "./core"
+      ], factory);
+    } else {
+      factory(jQuery, Formstone);
+    }
+  }(function($, Formstone) {
 
-	/**
-	 * @method private
-	 * @name delegate
-	 * @param key [string] "Cookie key"
-	 * @param value [string] "Cookie value"
-	 * @param options [object] "Options object"
-	 * @return [null || string] "Cookie value, if 'read'"
-	 */
+    "use strict";
 
-	function delegate(key, value, options) {
-		if ($.type(key) === "object") {
+    /**
+     * @method private
+     * @name delegate
+     * @param key [string] "Cookie key"
+     * @param value [string] "Cookie value"
+     * @param options [object] "Options object"
+     * @return [null || string] "Cookie value, if 'read'"
+     */
 
-			// Set defaults
+    function delegate(key, value, options) {
+      if ($.type(key) === "object") {
 
-			Defaults = $.extend(Defaults, key);
-		} else {
+        // Set defaults
 
-			// Delegate intent
+        Defaults = $.extend(Defaults, key);
+      } else {
 
-			options = $.extend({}, Defaults, options || {});
+        // Delegate intent
 
-			if ($.type(key) !== "undefined") {
-				if ($.type(value) !== "undefined") {
-					if (value === null) {
-						eraseCookie(key);
-					} else {
-						createCookie(key, value, options);
-					}
-				} else {
-					return readCookie(key);
-				}
-			}
-		}
+        options = $.extend({}, Defaults, options || {});
 
-		return null;
-	}
+        if ($.type(key) !== "undefined") {
+          if ($.type(value) !== "undefined") {
+            if (value === null) {
+              eraseCookie(key, options);
+            } else {
+              createCookie(key, value, options);
+            }
+          } else {
+            return readCookie(key);
+          }
+        }
+      }
 
-	/**
-	 * @method
-	 * @name create
-	 * @description Creates a cookie.
-	 * @param key [string] "Cookie key"
-	 * @param value [string] "Cookie value"
-	 * @param options [object] "Options object"
-	 * @example $.cookie(key, value, options);
-	 */
+      return null;
+    }
 
-	function createCookie(key, value, options) {
-		var expiration = false,
-			date = new Date();
+    /**
+     * @method
+     * @name create
+     * @description Creates a cookie.
+     * @param key [string] "Cookie key"
+     * @param value [string] "Cookie value"
+     * @param options [object] "Options object"
+     * @example $.cookie(key, value, options);
+     */
 
-		// Check Expiration Date
+    function createCookie(key, value, options) {
+      var expiration = false,
+        date = new Date();
 
-		if (options.expires && $.type(options.expires) === "number") {
-			date.setTime( date.getTime() + options.expires );
-			expiration = date.toGMTString();
-		}
+      // Check Expiration Date
 
-		var domain     = (options.domain)    ? "; domain=" + options.domain : "",
-			expires    = (expiration)        ? "; expires=" + expiration : "",
-			maxAge     = (expiration)        ? "; max-age=" + (options.expires / 1000) : "", // to seconds
-			path       = (options.path)      ? "; path=" + options.path : "",
-			secure     = (options.secure)    ? "; secure" : "";
+      if (options.expires && $.type(options.expires) === "number") {
+        date.setTime(date.getTime() + options.expires);
+        expiration = date.toGMTString();
+      }
 
-		// Set Cookie
+      var domain = (options.domain) ? "; domain=" + options.domain : "",
+        expires = (expiration) ? "; expires=" + expiration : "",
+        maxAge = (expiration) ? "; max-age=" + (options.expires / 1000) : "", // to seconds
+        path = (options.path) ? "; path=" + options.path : "",
+        secure = (options.secure) ? "; secure" : "";
 
-		Document.cookie = key + "=" + value + expires + maxAge + domain + path + secure;
-	}
+      // Set Cookie
 
-	/**
-	 * @method
-	 * @name read
-	 * @description Returns a cookie's value, or null.
-	 * @param key [string] "Cookie key"
-	 * @return [string | null] "Cookie's value, or null"
-	 * @example var value = $.cookie(key);
-	 */
+      Document.cookie = key + "=" + value + expires + maxAge + domain + path + secure;
+    }
 
-	function readCookie(key) {
-		var keyString    = key + "=",
-			cookies      = Document.cookie.split(';');
+    /**
+     * @method
+     * @name read
+     * @description Returns a cookie's value, or null.
+     * @param key [string] "Cookie key"
+     * @return [string | null] "Cookie's value, or null"
+     * @example var value = $.cookie(key);
+     */
 
-		// Loop Cookies
+    function readCookie(key) {
+      var keyString = key + "=",
+        cookies = Document.cookie.split(';');
 
-		for(var i = 0; i < cookies.length; i++) {
-			var cookie = cookies[i];
+      // Loop Cookies
 
-			while (cookie.charAt(0) === ' ') {
-				cookie = cookie.substring(1, cookie.length);
-			}
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
 
-			// Return Match
+        while (cookie.charAt(0) === ' ') {
+          cookie = cookie.substring(1, cookie.length);
+        }
 
-			if (cookie.indexOf(keyString) === 0) {
-				return cookie.substring(keyString.length, cookie.length);
-			}
-		}
+        // Return Match
 
-		return null;
-	}
+        if (cookie.indexOf(keyString) === 0) {
+          return cookie.substring(keyString.length, cookie.length);
+        }
+      }
 
-	/**
-	 * @method
-	 * @name erase
-	 * @description Deletes a cookie.
-	 * @param key [string] "Cookie key"
-	 * @example $.cookie(key, null);
-	 */
+      return null;
+    }
 
-	function eraseCookie(key) {
-		createCookie(key, "", {
-			expires: -604800000 // -7 days
-		});
-	}
+    /**
+     * @method
+     * @name erase
+     * @description Deletes a cookie.
+     * @param key [string] "Cookie key"
+     * @example $.cookie(key, null);
+     */
 
-	/**
-	 * @plugin
-	 * @name Cookie
-	 * @description A jQuery plugin for simple access to browser cookies.
-	 * @type utility
-	 * @main cookie.js
-	 * @dependency jQuery
-	 * @dependency core.js
-	 */
+    function eraseCookie(key, options) {
+      createCookie(key, "", $.extend({}, options, {
+        expires: -604800000 // -7 days
+      }));
+    }
 
-	var Plugin = Formstone.Plugin("cookie", {
-			utilities: {
-				_delegate : delegate
-			}
-		}),
+    /**
+     * @plugin
+     * @name Cookie
+     * @description A jQuery plugin for simple access to browser cookies.
+     * @type utility
+     * @main cookie.js
+     * @dependency jQuery
+     * @dependency core.js
+     */
 
-		/**
-		 * @options
-		 * @param domain [string] "Cookie domain"
-		 * @param expires [int] <604800000> "Time until cookie expires"
-		 * @param path [string] "Cookie path"
-		 */
+    var Plugin = Formstone.Plugin("cookie", {
+        utilities: {
+          _delegate: delegate
+        }
+      }),
 
-		Defaults = {
-			domain     : null,
-			expires    : 604800000, // 7 days
-			path       : null,
-			secure     : null
-		},
+      /**
+       * @options
+       * @param domain [string] "Cookie domain"
+       * @param expires [int] <604800000> "Time until cookie expires"
+       * @param path [string] "Cookie path"
+       */
 
-		// Localize References
+      Defaults = {
+        domain: null,
+        expires: 604800000, // 7 days
+        path: null,
+        secure: null
+      },
 
-		Document = Formstone.document;
+      // Localize References
 
-})(jQuery, Formstone);
+      Document = Formstone.document;
+
+  })
+
+);

@@ -2,18 +2,30 @@
 
 A jQuery plugin for responsive media query events.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Events](#events)
 * [Methods](#methods)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Media Query
+
 
 #### Main
 
 ```markup
 mediaquery.js
 ```
+
 
 #### Dependencies
 
@@ -28,10 +40,10 @@ Media Query can track global changes to screen size based on an existing grid sy
 
 ```javascript
 $.mediaquery({
-	minWidth     : [ 320, 500, 740, 980, 1220 ],
-	maxWidth     : [ 1220, 980, 740, 500, 320 ],
-	minHeight    : [ 400, 800 ],
-	maxHeight    : [ 800, 400 ]
+  minWidth     : [ 320, 500, 740, 980, 1220 ],
+  maxWidth     : [ 1220, 980, 740, 500, 320 ],
+  minHeight    : [ 400, 800 ],
+  maxHeight    : [ 800, 400 ]
 });
 ```
 
@@ -41,7 +53,7 @@ After initializing, simply listen for the `mqchange.mediaquery` event:
 
 ```javascript
 $(window).on("mqchange.mediaquery", function(e, state) {
-	console.log(state.minWidth, state.maxWidth, state.minHeight, state.maxHeight);
+  console.log(state.minWidth, state.maxWidth, state.minHeight, state.maxHeight);
 });
 ```
 
@@ -53,12 +65,12 @@ Media Query can also bind events to specific media query changes for more fine g
 
 ```javascript
 $.mediaquery("bind", "mq-key", "(min-width: 740px)", {
-	enter: function() {
-		...
-	},
-	leave: function() {
-		...
-	}
+  enter: function() {
+    ...
+  },
+  leave: function() {
+    ...
+  }
 });
 ```
 
@@ -68,9 +80,9 @@ To unbind a Media Query:
 $.mediaquery("unbind", "mq-key");
 ```
 
-### IE Support
 
-When supporting IE, a [HTML5 enabler](https://gist.github.com/benplum/8045366) and matchMedia polyfill ([IE 8](https://gist.github.com/benplum/8045336), [IE 9](https://gist.github.com/benplum/8045327)) are required.
+
+<a name="options"></a>
 
 ## Options
 
@@ -84,6 +96,9 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `maxHeight` | ` Infinity ` | &nbsp; | Array of max-heights |
 | `unit` | `string` | `'px'` | Unit to use when matching widths and heights |
 
+<hr>
+<a name="events"></a>
+
 ## Events
 
 Events are triggered on the `window`, unless otherwise stated.
@@ -91,6 +106,9 @@ Events are triggered on the `window`, unless otherwise stated.
 | Event | Description |
 | --- | --- |
 | `mqchange.mediaquery` | Change to a media query match; Triggered on window |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -117,7 +135,7 @@ $.mediaquery("bind", "key", "(min-width: 500px)", { ... });
 Extends plugin default settings; effects instances created hereafter.
 
 ```javascript
-$.media query("defaults", { ... });
+$.mediaquery("defaults", { ... });
 ```
 
 #### Parameters

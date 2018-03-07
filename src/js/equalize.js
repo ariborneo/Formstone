@@ -1,215 +1,229 @@
-;(function ($, Formstone, undefined) {
+/* global define */
 
-	"use strict";
+(function(factory) {
+    if (typeof define === "function" && define.amd) {
+      define([
+        "jquery",
+        "./core",
+        "./mediaquery"
+      ], factory);
+    } else {
+      factory(jQuery, Formstone);
+    }
+  }(function($, Formstone) {
 
-	/**
-	 * @method private
-	 * @name resize
-	 * @description Handles window resize
-	 */
+    "use strict";
 
-	function resize(windowWidth) {
-		Functions.iterate.call($Instances, resizeInstance);
-	}
+    /**
+     * @method private
+     * @name resize
+     * @description Handles window resize
+     */
 
-	/**
-	 * @method private
-	 * @name cacheInstances
-	 * @description Caches active instances
-	 */
+    function resize(windowWidth) {
+      Functions.iterate.call($Instances, resizeInstance);
+    }
 
-	function cacheInstances() {
-		$Instances = $(Classes.element);
-	}
+    /**
+     * @method private
+     * @name cacheInstances
+     * @description Caches active instances
+     */
 
-	/**
-	 * @method private
-	 * @name construct
-	 * @description Builds instance.
-	 * @param data [object] "Instance Data"
-	 */
+    function cacheInstances() {
+      $Instances = $(Classes.element);
+    }
 
-	function construct(data) {
-		data.maxWidth = (data.maxWidth === Infinity ? "100000px" : data.maxWidth);
-		data.mq       = "(min-width:" + data.minWidth + ") and (max-width:" + data.maxWidth + ")";
-		data.type     = (data.property === "height") ? "outerHeight" : "outerWidth";
+    /**
+     * @method private
+     * @name construct
+     * @description Builds instance.
+     * @param data [object] "Instance Data"
+     */
 
-		if (data.target) {
-			if (!$.isArray(data.target)) {
-				data.target = [ data.target ];
-			}
-		} else {
-			data.target = [ "> *" ];
-		}
+    function construct(data) {
+      data.maxWidth = (data.maxWidth === Infinity ? "100000px" : data.maxWidth);
+      data.mq = "(min-width:" + data.minWidth + ") and (max-width:" + data.maxWidth + ")";
+      data.type = (data.property === "height") ? "outerHeight" : "outerWidth";
 
-		cacheInstances();
+      if (data.target) {
+        if (!$.isArray(data.target)) {
+          data.target = [data.target];
+        }
+      } else {
+        data.target = ["> *"];
+      }
 
-		$.fsMediaquery("bind", data.rawGuid, data.mq, {
-			enter: function() {
-				enable.call(data.$el, data);
-			},
-			leave: function() {
-				disable.call(data.$el, data);
-			}
-		});
-	}
+      cacheInstances();
 
-	/**
-	 * @method private
-	 * @name destruct
-	 * @description Tears down instance.
-	 * @param data [object] "Instance data"
-	 */
+      $.fsMediaquery("bind", data.rawGuid, data.mq, {
+        enter: function() {
+          enable.call(data.$el, data);
+        },
+        leave: function() {
+          disable.call(data.$el, data);
+        }
+      });
+    }
 
-	function destruct(data) {
-		tearDown(data);
+    /**
+     * @method private
+     * @name destruct
+     * @description Tears down instance.
+     * @param data [object] "Instance data"
+     */
 
-		$.fsMediaquery("unbind", data.rawGuid);
+    function destruct(data) {
+      tearDown(data);
 
-		cacheInstances();
-	}
+      $.fsMediaquery("unbind", data.rawGuid);
 
-	/**
-	 * @method
-	 * @name resize
-	 * @description Resizes instance
-	 * @example $(".target").equalize("resize");
-	 */
+      cacheInstances();
+    }
 
-	/**
-	 * @method private
-	 * @name resizeInstance
-	 * @description Handle window resize event
-	 * @param data [object] "Instance data"
-	 */
+    /**
+     * @method
+     * @name resize
+     * @description Resizes instance
+     * @example $(".target").equalize("resize");
+     */
 
-	function resizeInstance(data) {
-		if (data.data) {
-			data = data.data; // normalize image resize events
-		}
+    /**
+     * @method private
+     * @name resizeInstance
+     * @description Handle window resize event
+     * @param data [object] "Instance data"
+     */
 
-		if (data.enabled) {
-			var value,
-				check,
-				$target;
+    function resizeInstance(data) {
+      if (data.data) {
+        data = data.data; // normalize image resize events
+      }
 
-			for (var i = 0; i < data.target.length; i++) {
-				value = 0;
-				check = 0;
-				$target = data.$el.find( data.target[i] );
+      if (data.enabled) {
+        var value,
+          check,
+          $target;
 
-				$target.css(data.property, "");
+        for (var i = 0; i < data.target.length; i++) {
+          value = 0;
+          check = 0;
+          $target = data.$el.find(data.target[i]);
 
-				for (var j = 0; j < $target.length; j++) {
-					check = $target.eq(j)[ data.type ]();
+          $target.css(data.property, "");
 
-					if (check > value) {
-						value = check;
-					}
-				}
+          for (var j = 0; j < $target.length; j++) {
+            check = $target.eq(j)[data.type]();
 
-				$target.css(data.property, value);
-			}
-		}
-	}
+            if (check > value) {
+              value = check;
+            }
+          }
 
-	/**
-	 * @method
-	 * @name disable
-	 * @description Disables instance of plugin
-	 * @example $(".target").equalize("disable");
-	 */
+          $target.css(data.property, value);
+        }
+      }
+    }
 
-	function disable(data) {
-		if (data.enabled) {
-			data.enabled = false;
+    /**
+     * @method
+     * @name disable
+     * @description Disables instance of plugin
+     * @example $(".target").equalize("disable");
+     */
 
-			tearDown(data);
-		}
-	}
+    function disable(data) {
+      if (data.enabled) {
+        data.enabled = false;
 
-	/**
-	 * @method
-	 * @name enable
-	 * @description Enables instance of plugin
-	 * @example $(".target").equalize("enable");
-	 */
+        tearDown(data);
+      }
+    }
 
-	function enable(data) {
-		if (!data.enabled) {
-			data.enabled = true;
+    /**
+     * @method
+     * @name enable
+     * @description Enables instance of plugin
+     * @example $(".target").equalize("enable");
+     */
 
-			var $images = data.$el.find("img");
+    function enable(data) {
+      if (!data.enabled) {
+        data.enabled = true;
 
-			if ($images.length) {
-				$images.on(Events.load, data, resizeInstance);
-			}
+        var $images = data.$el.find("img");
 
-			resizeInstance(data);
-		}
-	}
+        if ($images.length) {
+          $images.on(Events.load, data, resizeInstance);
+        }
 
-	/**
-	 * @method private
-	 * @name tearDown
-	 * @description Removes styling from elements
-	 * @param data [object] "Instance data"
-	 */
+        resizeInstance(data);
+      }
+    }
 
-	function tearDown(data) {
-		for (var i = 0; i < data.target.length; i++) {
-			data.$el.find( data.target[i] ).css(data.property, "");
-		}
+    /**
+     * @method private
+     * @name tearDown
+     * @description Removes styling from elements
+     * @param data [object] "Instance data"
+     */
 
-		data.$el.find("img").off(Events.namespace);
-	}
+    function tearDown(data) {
+      for (var i = 0; i < data.target.length; i++) {
+        data.$el.find(data.target[i]).css(data.property, "");
+      }
 
-	/**
-	 * @plugin
-	 * @name Equalize
-	 * @description A jQuery plugin for equal dimensions.
-	 * @type widget
-	 * @main equalize.js
-	 * @dependency jQuery
-	 * @dependency core.js
-	 * @dependency mediaquery.js
-	 */
+      data.$el.find("img").off(Events.namespace);
+    }
 
-	var Plugin = Formstone.Plugin("equalize", {
-			widget: true,
-			priority: 5,
+    /**
+     * @plugin
+     * @name Equalize
+     * @description A jQuery plugin for equal dimensions.
+     * @type widget
+     * @main equalize.js
+     * @dependency jQuery
+     * @dependency core.js
+     * @dependency mediaquery.js
+     */
 
-			/**
-			 * @options
-			 * @param maxWidth [string] <'Infinity'> "Width at which to auto-disable plugin"
-			 * @param minWidth [string] <'0'> "Width at which to auto-disable plugin"
-			 * @param property [string] <"height"> "Property to size; 'height' or 'width'"
-			 * @param target [string OR array] <null> "Target child selector(s); Defaults to direct descendants"
-			 */
+    var Plugin = Formstone.Plugin("equalize", {
+        widget: true,
+        priority: 5,
 
-			defaults: {
-				maxWidth    : Infinity,
-				minWidth    : "0px",
-				property    : "height",
-				target      : null
-			},
+        /**
+         * @options
+         * @param maxWidth [string] <'Infinity'> "Width at which to auto-disable plugin"
+         * @param minWidth [string] <'0'> "Width at which to auto-disable plugin"
+         * @param property [string] <"height"> "Property to size; 'height' or 'width'"
+         * @param target [string OR array] <null> "Target child selector(s); Defaults to direct descendants"
+         */
 
-			methods : {
-				_construct    : construct,
-				_destruct     : destruct,
-				_resize       : resize,
+        defaults: {
+          maxWidth: Infinity,
+          minWidth: "0px",
+          property: "height",
+          target: null
+        },
 
-				resize        : resizeInstance
-			}
-		}),
+        methods: {
+          _construct: construct,
+          _destruct: destruct,
+          _resize: resize,
 
-		// Localize References
+          resize: resizeInstance
+        }
+      }),
 
-		Classes        = Plugin.classes,
-		RawClasses     = Classes.raw,
-		Events         = Plugin.events,
-		Functions      = Plugin.functions,
+      // Localize References
 
-		$Instances     = [];
+      Classes = Plugin.classes,
+      RawClasses = Classes.raw,
+      Events = Plugin.events,
+      Functions = Plugin.functions,
 
-})(jQuery, Formstone);
+      $Instances = [];
+
+  })
+
+);

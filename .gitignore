@@ -12,3 +12,7 @@ npm-debug.log
 
 # Editor
 .idea
+
+# Custom
+/demo/_extra/uploads/
+/demo/_src/pages

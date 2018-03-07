@@ -2,12 +2,23 @@
 
 A jQuery plugin for simple tooltips.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Tooltip
+
 
 #### Main
 
@@ -15,6 +26,7 @@ A jQuery plugin for simple tooltips.
 tooltip.js
 tooltip.css
 ```
+
 
 #### Dependencies
 
@@ -29,7 +41,7 @@ Tooltip will generate a tooltip based on the target element's `data-title` attri
 
 ```javascript
 $("a").tooltip({
-	direction: "top"
+  direction: "top"
 });
 ```
 
@@ -44,7 +56,7 @@ Tooltip can be configured to follow the user's mouse:
 
 ```javascript
 $("a").tooltip({
-	follow: true
+  follow: true
 });
 ```
 
@@ -54,7 +66,7 @@ Tooltip can be configured to match the user's mouse position, relative to the ta
 
 ```javascript
 $("a").tooltip({
-	match: true
+  match: true
 });
 ```
 -->
@@ -65,9 +77,12 @@ A delay can be set to avoid accidental tooltips:
 
 ```javascript
 $("a").tooltip({
-	delay: 500
+  delay: 500
 });
 ```
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -82,6 +97,10 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `formatter` | `function` | `$.noop` | Text format function |
 | `margin` | `int` | `15` | Tooltip margin |
 | `match` | `boolean` | `false` | Flag to match mouse position |
+| `theme` | `string` | `"fs-light"` | Theme class name |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -108,6 +127,9 @@ Removes plugin instance.
 ```javascript
 $(".target").tooltip("destroy");
 ```
+
+<hr>
+<a name="css"></a>
 
 ## CSS
 

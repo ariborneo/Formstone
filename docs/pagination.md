@@ -2,13 +2,24 @@
 
 A jQuery plugin for simple pagination.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Events](#events)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Pagination
+
 
 #### Main
 
@@ -16,6 +27,7 @@ A jQuery plugin for simple pagination.
 pagination.js
 pagination.css
 ```
+
 
 #### Dependencies
 
@@ -27,7 +39,25 @@ mediaquery.js
 
 ### Basic
 
+Pagination will convert a set of links into a mobile-friendly pagination system:
 
+```javascript
+$(".pagination").pagination();
+```
+
+```markup
+<nav class="pagination">
+  <a href="1.html">1</a>
+  <a href="2.html">2</a>
+  <a href="3.html">3</a>
+  <a href="4.html">4</a>
+  <a href="5.html">5</a>
+</nav>
+```
+
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -38,11 +68,17 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `ajax` | `boolean` | `false` | Flag to disable default click actions |
 | `customClass` | `string` | `''` | Class applied to instance |
 | `labels.close` | `string` | `'Close'` | Close button text |
-| `labels.count` | `string` | `'of'` | Gallery count separator text |
-| `labels.next` | `string` | `'Next'` | Gallery control text |
-| `labels.previous` | `string` | `'Previous'` | Gallery control text |
+| `labels.count` | `string` | `'of'` | Pagination count separator text |
+| `labels.next` | `string` | `'Next'` | Pagination control text |
+| `labels.previous` | `string` | `'Previous'` | Pagination control text |
+| `labels.select` | `string` | `'Select Page'` | Pagination select title |
+| `labels.pagination` | `string` | `'Pagination {guid}'` | Pagination aria label; {guid} replaced with instance GUID |
 | `maxWidth` | `string` | `'980px'` | Width at which to auto-disable plugin |
+| `theme` | `string` | `"fs-light"` | Theme class name |
 | `visible` | `int` | `2` | Visible pages before and after current page |
+
+<hr>
+<a name="events"></a>
 
 ## Events
 
@@ -51,6 +87,9 @@ Events are triggered on the target instance's element, unless otherwise stated.
 | Event | Description |
 | --- | --- |
 | `update.pagination` | Page updated |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -86,6 +125,9 @@ Jump instance of plugin to specific page
 $(".target").pagination("jump", 1);
 ```
 
+<hr>
+<a name="css"></a>
+
 ## CSS
 
 | Class | Type | Description |
@@ -105,4 +147,6 @@ $(".target").pagination("jump", 1);
 | `.fs-pagination-control.fs-pagination-control_next` | `modifier` | Indicates next control |
 | `.fs-pagination-position` | `element` | Mobile position indicator |
 | `.fs-pagination-select` | `element` | Mobile page dropdown |
+| `.fs-pagination-current` | `element` | Current page mobile display |
+| `.fs-pagination-total` | `element` | Total pages mobile display |
 

@@ -1,228 +1,157 @@
 # Changelog
 
-### 0.8.38
+<!-- -->
+
+### 1.4.3
+
+* Fixed issue with 'autoAdvanced' in Carousel
+* Fixed issue with 'first' and 'last' cells in Grid
+* Fixed issue with image URL detection in Lightbox
+* Renamed 'mobile' to 'overlay' in Lightbox
+
+### 1.4.2
+
+* Fixed issue with 'paged' counts in Carousel
+* Fixed issue with cell alignment in Grid
+
+### 1.4.1
+
+* Added `alt` option in Background
+* Added aria labeling options in Carousel, Lightbox, and Pagination
+* Fixed issue with nested rows in Grid
+* Fixed issue with initialization in Checkpoint
+* Fixed issue with label selector in Dropdown
+* Fixed issue with rounding small steps in Number
+* Fixed issue with accessibility in Pagination (Thanks @nhall!)
+
+### 1.4.0
+
+* Updated minimum jQuery version
+* Updated to Gulp build process
+* Added flexbox based grid as default (legacy float based grid still available)
+* Added Checkpoint plugin for CSS animations scroll
+* Added Sticky plugin for sticky elements on scroll
+* Added Formstone.Ready handler to Core
+* Added additional AJAX parameters in Upload events
+* Fixed issue with moving input elements in Checkbox
+* Fixed issue with load order and `setup` calls
+* Renamed `mobile` option to `native` in Dropdown for clarity
+* Removed Modernizr requirement
+* Removed legacy browser support
+
+### 1.3.3
 
-* Added ability to search by more then 1 letter in Dropdown (Thanks @thierrymichel!)
-* Fixed second parameter in ASAP request event (Thanks @adriansuter!)
-* Removed button focus styles (Thanks @nhall!)
+* Added compiled theme files for each component
+* Fixed issue with un-contained Carousel item focus
 
-### 0.8.37
+### 1.3.2
 
-* Fixed Lightbox event binding issue
+* Fixed issue with Viewer in Lightbox (Thanks @mackensen!)
+* Fixed issue with inline content in Lightbox
+* Fixed issue with focus in Lightbox
 
-### 0.8.36
+### 1.3.1
 
-* Added HTML label support to Navigation (Thanks @collegeman!)
-* Fixed accessibility issues with Background (Thanks @nhall!)
-* Fixed accessibility issues with Carousel (Thanks @nhall!)
-* Fixed accessibility issues with Checkbox
-* Fixed accessibility issues with Dropdown
+* Added viewport and gesture locking for touch based components
+* Added `maxFile` option in Upload
+* Renamed `maxQueue` option to `maxConcurrent` in Upload for clarity
+* Fixed error handling in Lightbox
+* Fixed issue with Scrollbar jumping in Firefox
+* Fixed issue with Scrollbar handle closing Dropdown
+* Fixed issue with `wheel` event on Scrollbar track
+* Fixed Viewer styling issue in Lightbox theme
+* Fixed issue when installing via NPM
+* Deprecated YouTube options in Background for TOS compliance
 
-### 0.8.35
+### 1.3.0
 
-* Fixed issue with Analytics scroll depth interfering with bounce rate
-* Added `autoUpload` option and `start` method to Upload
-* Fixed issue with Upload queued files parameter
+* Added Viewer component
+* Added file chunking to Upload
+* Added load error event to Background
+* Added `jumpItem` method to Carousel
+* Aliased `jump`, `previous`, and `next` methods to `jumpPage`, `previousPage`, and `nextPage` in Carousel
+* Fixed protocol agnostic YouTube thumbnail in Background
+* Fixed Navigation styles in fs-light base theme
+* Fixed issue with mobile dropdown options in Pagination
 
-### 0.8.34
+### 1.2.2
 
-* Fixed issue with Carousel `touch` events not clearing auto advance timers
-* Fixed issue with Dropdown not firing `change` event
-* Fixed issue with Dropdown `focus` handling 
+* Fixed issue with Dropdown options in WebKit/Blink on mobile
 
-### 0.8.33
+### 1.2.1
 
-* Added ability to open Lightbox gallery with URL fragment identifier
-* Fixed issue with Range `change` events
+* Added ability to define custom fields for scroll depth events in Analytics
+* Fixed issue with accessing target element from `beforeSend` callback in Upload
+* Fixed video sizing issue in Lightbox
+* Fixed link actions in Pagination
+* Removed erroneous `vertical` option in Tabs
 
-### 0.8.32
+### 1.2.0
 
-* Fixed issue with `overlay` Navigation in Android Browser
-* Fixed issue with Dropdown not opening on Windows touch devices
-* Fixed issue with multi Dropdown on mobile
+* Added `lazy` and `lazyEdge` options to Background
+* Added `update` method to Number
+* Added `update` method to Range
+* Added example code to demos
+* Added custom pagination container in Carousel
+* Fixed accessibility issues in Checkbox
+* Fixed accessibility issues in Dropdown
+* Fixed accessibility issues in Lightbox
+* Fixed accessibility issues in Navigation
+* Fixed accessibility issues in Number
+* Fixed accessibility issues in Pagination
+* Fixed accessibility issues in Scrollbar
+* Fixed accessibility issues in Range
+* Fixed accessibility issues in Tabs
+* Fixed accessibility issues in Upload
+* Fixed `visible` classing in Pagination
+* Fixed `disabled` hover state in Range
+* Normalized setting `active` item in Pagination
+* Removed non-standard `readonly` support from Checkbox
 
-### 0.8.31
+### 1.1.3
 
-* Fixed issue with Modernizr change to `no-touchevents`
-* Modified Carousel touch paging to be more consistent
-* Added `matchWidth` option to Carousel
-* Fixed issue with Background not storing muted state
+* Fixed link actions in Pagination
+* Fixed display bug in Upload
 
-### 0.8.30
+### 1.1.2
 
-* Added ability to clear default label in Upload (Thanks @Valamas!)
-* Fixed issue with right clicking Number arrows
-* Fixed issue with pop state in ASAP
+* Added `accept` option to Upload
 
-### 0.8.29
+### 1.1.1
 
-* Switched event delegation in Upload to allow extra content
-* Added `filedragenter`, `filedragover`, and `filedragleave` events to Upload (Thanks @Valamas!)
-* Added multi-select range and modifier actions to Dropdown
-* Fixed issue with `single` and `rtl` options in Carousel
+* Fixed issue with iOS `change` events in Dropdown
+* Fixed webkit touch scrolling in Lightbox
+* Fixed webkit touch scrolling in Navigation (Thanks @nhall!)
 
-### 0.8.28
+### 1.1.0
 
-* Fixed issue with resize mobile Lightbox
-* Fixed issue with updating Dropdown Scrollbars (Thanks @cbier!)
-* Removed `tap` event from Touch
-* Resolved issue with IE pointer events in Touch
+* Added `thumbnail` option to Lightbox
+* Added `maxHeight` and `maxWidth` options for element modals in Lightbox
+* Added linked carousel support to Carousel
+* Added controller carousel support to Carousel
+* Fixed `rtl` positioning in Carousel
+* Fixed issues with Dropdown option container positioning
 
-### 0.8.27
+### 1.0.4
 
-* Added `readonly` support to Checkbox (Thanks @Bonscho!), Dropdown, Number and Range
-* Updated upload Demo to include `queue` event (Thanks @Bonscho!)
+* Fixed issue with empty option values in Dropdown
 
-### 0.8.26
+### 1.0.3
 
-* Added matchMedia graceful degradation to Media Query, matches closest `fallbackWidth` and `fallbackHeight` values
-* Added `ignoreTypes` option to ASAP to avoid loading downloadable files via AJAX
-* Renamed `extensions` to `fileTypes` in Lightbox for consistency
+* Fixed issue with multiple bindings in Media Query
 
-### 0.8.25
+### 1.0.2
 
-* Fixed false positive on transitionEnd events in Transition
-* Fixed issue with inaccessible Number inputs on iOS
-* Increased initial pointer down delay in Number 
-* Added `queued` event to Upload (Thanks @Bonscho!)
+* Fixed issue with fragment identifier linking in Tabs
 
-### 0.8.24
+### 1.0.1
 
-* Added `support.nativeMatchMedia` and `fallbackWidth` values for graceful degradation
-* Added matchMedia graceful degradation to Carousel, matches closest `fallbackWidth` value
+* Fixed issue with `play` method in Background
 
-### 0.8.23
+### 1.0.0
 
-* Fixed issue with Carousel removing previous and next classes
-* Fixed issue with Analytics and content blockers
-
-### 0.8.22
-
-* Fixed issue with Carousel `matchHeight` option
-* Fixed issue with Tabs mobile classing
-* Fixed XSS issue in Dropdown
-
-### 0.8.21
-
-* Added `mute` and `unmute` public methods to Background
-* Added `fill` element to Range
-* Added `abort` public method to Upload
-* Added ability to cancel uploads in `beforeSend` Upload callback
-
-### 0.8.20
-
-* Added `min-height` to Carousel items, resolves issue with accidentally empty carousels
-* Added ability to target same content element from multiple Navigations
-
-### 0.8.19
-
-* Added `postContruct` callback system, run after current set has initialized
-* Added ability to set active Tab item
-* Added ability to deep-link Tab item based on page hash
-* Added ability to set custom Carousel controls container
-* Added `previous` and `next` states for Carousel items
-
-### 0.8.18
-
-* Added check for Request Animation Frame
-* Switched to passing `window` in Core closure
-
-### 0.8.17
-
-* Added internal events: 
-	- `panStart`
-	- `pan`
-	- `panEnd`
-	- `scaleStart`
-	- `scale`
-	- `scaleEnd`
-	- `swipe`
-* Added internal Request Animation Frame callback system
-* Improved Lightbox pinch-and-zoom performance
-* Updated Scrollbar to use Touch pan events
-* Rebuilt ASAP by removing internal DOM caching for better state handling
-* Removed clickTouchStart events in favor of browsers handling touch
-
-### 0.8.16
-
-* Fixed issue with grouped Swap active item
-* Fixed issue with Lightbox loading icon visibility
-* Fixed issue with fullscreen YouTube videos in Lightbox 
-* Fixed regression in ASAP Analytics check
-
-### 0.8.15
-
-* Added basic pinch-and-zoom to Lightbox on touch devices
-
-### 0.8.14
-
-* Fixed ASAP issue with replacing history state
-* Disabled touch in Checkbox due to erratic behavior
-
-### 0.8.13
-
-* Fixed typo in Background and Carousel 
-
-### 0.8.12
-
-* Fixed Background window width issue
-* Optimized Background and Carousel responsive calculations
-
-### 0.8.11
-
-* Fixed Touch pointer event conflict
-
-### 0.8.10
-
-* Fixed Carousel window width issue
-
-### 0.8.9
-
-* Fixed overflow on `contained` Carousel
-
-### 0.8.8
-
-* Fixed ASAP redirects containing fragment identifiers
-* Removed debug code from Carousel
-
-### 0.8.7
-
-* Added HTML option labels to Dropdown 
-* Added `bottomEdge` option to Dropdown for custom thresholds
-* Fixed Touch click event error
-
-### 0.8.6
-
-* Added `top` and `bottom` keywords to Scrollbar `scroll` method
-* Added Dropdown Scrollbar support
-
-### 0.8.5
-
-* Added `beforeSend` callback to Upload for adding form data
-* Added `disabled` and `enabled` methods to Upload
-* Fixed issue with Upload warning on page leave
-
-### 0.8.4
-
-* Fixed ASAP Demo
-* Added check for Analytics in ASAP
-
-### 0.8.3
-
-* Added `contained` and `single` option to Carousel
-
-### 0.8.2
-
-* Fixed regression in ASAP rebuild
-
-### 0.8.1
-
-* Renamed ASAP events to avoid native conflicts:
-	- `request` to `requested`
-	- `render` to `rendered`
-	- `error` to `failed`
-	
-### 0.8.0
-
-* Rebuilt Analytics for better GA and GTM support
-* Added Analytics as ASAP dependency to reduce redundancies
+* Added theme support for all Widget plugins
+* Added fs-light base theme
+* Added AMD module wrappers to all components
+* Added custom video formatters in Lightbox
+* Fixed issue with removing data in Cookie

@@ -2,13 +2,24 @@
 
 A jQuery plugin for simple modals.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Events](#events)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Lightbox
+
 
 #### Main
 
@@ -17,6 +28,7 @@ lightbox.js
 lightbox.css
 ```
 
+
 #### Dependencies
 
 ```markup
@@ -24,6 +36,7 @@ jQuery
 core.js
 touch.js
 transition.js
+viewer.js (optional)
 ```
 
 ### Basic
@@ -36,7 +49,7 @@ $("a").lightbox();
 
 ```markup
 <a href="one.jpg" title="Image Caption">
-	<img src="one_thumb.jpg" alt="">
+  <img src="one_thumb.jpg" alt="">
 </a>
 ```
 
@@ -46,13 +59,13 @@ Link multiple images or videos together with the `data-lightbox-gallery` attribu
 
 ```markup
 <a href="one.jpg" title="Image Caption One" data-lightbox-gallery="photo_gallery">
-	<img src="one_thumb.jpg" alt="">
+  <img src="one_thumb.jpg" alt="">
 </a>
 <a href="two.jpg" title="Image Caption Two" data-lightbox-gallery="photo_gallery">
-	<img src="two_thumb.jpg" alt="">
+  <img src="two_thumb.jpg" alt="">
 </a>
 <a href="three.jpg" title="Image Caption Three" data-lightbox-gallery="photo_gallery">
-	<img src="three_thumb.jpg" alt="">
+  <img src="three_thumb.jpg" alt="">
 </a>
 ```
 
@@ -62,11 +75,14 @@ React to the lightbox by listening for the `open.lightbox` and `close.lightbox` 
 
 ```javascript
 $(window).on("open.lightbox", function() {
-	// ...
+  // ...
 }).on("close.lightbox", function() {
-	// ...
+  // ...
 });
 ```
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -83,18 +99,29 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `labels.count` | `string` | `'of'` | Gallery count separator text |
 | `labels.next` | `string` | `'Next'` | Gallery control text |
 | `labels.previous` | `string` | `'Previous'` | Gallery control text |
-| `labels.captionClosed` | `string` | `'View Caption'` | Mobile caption toggle text, closed state |
+| `labels.captionClosed` | `string` | `'Close Caption'` | Mobile caption toggle text, closed state |
 | `labels.captionOpen` | `string` | `'View Caption'` | Mobile caption toggle text, open state |
+| `labels.thumbnailsClosed` | `string` | `'Close Thumbnails'` | Mobile thumbnails toggle text, closed state |
+| `labels.thumbnailsOpen` | `string` | `'View Thumbnails'` | Mobile thumbnails toggle text, open state |
+| `labels.lightbox` | `string` | `'Lightbox {guid}'` | Lightbox aria label; {guid} replaced with instance GUID |
 | `margin` | `int` | `50` | Margin used when sizing (single side) |
+| `maxHeight` | `int` | `10000` | Maximum height of element modal |
+| `maxWidth` | `int` | `10000` | Maximum width of element modal |
 | `minHeight` | `int` | `100` | Minimum height of modal |
 | `minWidth` | `int` | `100` | Minimum width of modal |
-| `mobile` | `boolean` | `false` | Flag to force 'mobile' rendering |
+| `overlay` | `boolean` | `false` | Flag to force 'overlay' ('mobile') rendering |
 | `retina` | `boolean` | `false` | Flag to use 'retina' sizing (halves natural sizes) |
 | `requestKey` | `string` | `'fs-lightbox'` | GET variable for ajax / iframe requests |
+| `theme` | `string` | `"fs-light"` | Theme class name |
+| `thumbnails` | `boolean` | `false` | Flag to display thumbnail strip |
 | `top` | `int` | `0` | Target top position; over-rides centering |
-| `touch` | `boolean` | `true` | Flag to allow touch zoom on 'mobile' rendering |
-| `videoRadio` | `number` | `0.5625` | Video height / width ratio (9 / 16 = 0.5625) |
+| `videoFormatter` | &nbsp; | &nbsp; | Object of video formatter objects containing a 'pattern' regex and 'format' callback |
+| `videoRatio` | `number` | `0.5625` | Video height / width ratio (9 / 16 = 0.5625) |
 | `videoWidth` | `int` | `800` | Video max width |
+| `viewer` | `boolean` | `false` | Flag to force 'Viewer' rendering, if available |
+
+<hr>
+<a name="events"></a>
 
 ## Events
 
@@ -104,6 +131,10 @@ Events are triggered on the target instance's element, unless otherwise stated.
 | --- | --- |
 | `open.lightbox` | Lightbox opened; Triggered on window |
 | `close.lightbox` | Lightbox closed; Triggered on window |
+| `error.lightbox` | Lightbox error; Triggered on window |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -154,6 +185,9 @@ $.lightbox("resize");
 | `height` | `int | false` | &nbsp; | Target height or false to auto size |
 | `width` | `int | false` | &nbsp; | Target width or false to auto size |
 
+<hr>
+<a name="css"></a>
+
 ## CSS
 
 | Class | Type | Description |
@@ -189,5 +223,8 @@ $.lightbox("resize");
 | `.fs-lightbox-position_total` | `element` | Total position element |
 | `.fs-lightbox-caption` | `element` | Caption element |
 | `.fs-lightbox-error` | `element` | Error message element |
+| `.fs-lightbox-thumbnails` | `element` | &nbsp; |
+| `.fs-lightbox-thumbnail_container` | `element` | &nbsp; |
+| `.fs-lightbox-thumbnail_item` | `element` | &nbsp; |
 | `.fs-lightbox-lock` | `modifier` | Indicates locked state; Applied to body element |
 

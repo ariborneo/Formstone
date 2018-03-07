@@ -2,13 +2,24 @@
 
 A jQuery plugin for full-frame image and video backgrounds.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Events](#events)
 * [Methods](#methods)
 * [CSS](#css)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Background
+
 
 #### Main
 
@@ -16,6 +27,7 @@ A jQuery plugin for full-frame image and video backgrounds.
 background.js
 background.css
 ```
+
 
 #### Dependencies
 
@@ -31,13 +43,13 @@ Create a new Background by passing the source image URL at initialization:
 
 ```javascript
 $(".target").background({
-	source: "http://example.com/image.jpg"
+  source: "http://example.com/image.jpg"
 });
 ```
 
 ```markup
 <div class="target">
-	...
+  ...
 </div>
 ```
 
@@ -50,10 +62,10 @@ Create a responsive-friendly Background by defining key/value pairs containing t
 
 ```javascript
 $(".target").background({
-	source: {
-		"0px": "http://example.com/image-small.jpg",
-		"980px": "http://example.com/image-large.jpg"
-	}
+  source: {
+    "0px": "http://example.com/image-small.jpg",
+    "980px": "http://example.com/image-large.jpg"
+  }
 });
 ```
 
@@ -63,29 +75,33 @@ Create a video Background by defining proper browser-specific source video URLs,
 
 ```javascript
 $(".target").background({
-	source: {
-		poster: "http://example.com/poster.jpg",
-		webm: "http://example.com/video.webm",
-		mp4: "http://example.com/video.mp4",
-		ogg: "http://example.com/video.ogv"
-	}
+  source: {
+    poster: "http://example.com/poster.jpg",
+    webm: "http://example.com/video.webm",
+    mp4: "http://example.com/video.mp4",
+    ogg: "http://example.com/video.ogv"
+  }
 });
 ```
 
 Note: Mobile browsers do not allow videos to auto play due to bandwidth concerns. Background will not attempt to load videos on mobile devices, instead the poster image will be displayed.
 
-### YouTube Video
+<!-- ### YouTube Video
 
 Create a YouTube video Background by passing the YouTube embed URL as the source. If you do not define a poster, the YouTube thumbnail will be used:
 
 ```javascript
 $(".target").background({
-	source: {
-		poster: "http://example.com/poster.jpg",
-		video: "//www.youtube.com/embed/VIDEO_ID"
-	}
+  source: {
+    poster: "http://example.com/poster.jpg",
+    video: "//www.youtube.com/embed/VIDEO_ID"
+  }
 });
-```
+``` -->
+
+
+
+<a name="options"></a>
 
 ## Options
 
@@ -93,13 +109,18 @@ Set instance options by passing a valid object at initialization, or to the publ
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `alt` | `string` | `''` | Image `alt` attribute |
 | `autoPlay` | `boolean` | `true` | Autoplay video |
 | `customClass` | `string` | `''` | Class applied to instance |
 | `embedRatio` | `number` | `1.777777` | Video / embed ratio (16/9) |
+| `lazy` | `boolean` | `false` | Lazy load with scroll |
+| `lazyEdge` | `int` | `100` | Lazy load edge |
 | `loop` | `boolean` | `true` | Loop video |
 | `mute` | `boolean` | `true` | Mute video |
-| `source` | `string OR object` | `null` | Source image (string or object) or video (object) or YouTube (object) |
-| `youtubeOptions` | `object` | `null` | Custom YouTube player parameters (to be used cautiously); See https://developers.google.com/youtube/player_parameters for more |
+| `source` | `string OR object` | `null` | Source image (string or object) or video (object) |
+
+<hr>
+<a name="events"></a>
 
 ## Events
 
@@ -109,6 +130,10 @@ Events are triggered on the target instance's element, unless otherwise stated.
 | --- | --- |
 | `loaded.background` | Background media loaded |
 | `ready.background` | Background media ready |
+| `error.background` | Background media error |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
@@ -127,15 +152,12 @@ $(".target").background("load", { "0px": "path/to/image-small.jpg", "980px": "pa
 ```javascript
 $(".target").background("load", { "poster": "path/to/image.jpg", "webm": "path/to/video.webm", "mp4": "path/to/video.mp4", "ogg": "path/to/video.ogv" });
 ```
-```javascript
-$(".target").background("load", { "poster": "path/to/image.jpg", "video": "//www.youtube.com/embed/VIDEO_ID" });
-```
 
 #### Parameters
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `source` | `string OR object` | &nbsp; | Source image (string or object) or video (object) or YouTube (object); |
+| `source` | `string OR object` | &nbsp; | Source image (string or object) or video (object) |
 
 ### mute
 
@@ -176,6 +198,9 @@ Unmutes target video
 ```javascript
 $(".target").background("unmute");
 ```
+
+<hr>
+<a name="css"></a>
 
 ## CSS
 

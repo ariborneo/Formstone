@@ -1,270 +1,284 @@
-;(function ($, Formstone, undefined) {
+/* global define */
 
-	"use strict";
+(function(factory) {
+    if (typeof define === "function" && define.amd) {
+      define([
+        "jquery",
+        "./core",
+        "./mediaquery"
+      ], factory);
+    } else {
+      factory(jQuery, Formstone);
+    }
+  }(function($, Formstone) {
 
-	/**
-	 * @method private
-	 * @name construct
-	 * @description Builds instance.
-	 * @param data [object] "Instance data"
-	 */
+    "use strict";
 
-	function construct(data) {
-		data.enabled    = false;
-		data.active     = false;
+    /**
+     * @method private
+     * @name construct
+     * @description Builds instance.
+     * @param data [object] "Instance data"
+     */
 
-		data.classes    = $.extend(true, {}, Classes, data.classes);
+    function construct(data) {
+      data.enabled = false;
+      data.active = false;
 
-		data.target     = this.data(Namespace + "-target");
-		data.$target    = $(data.target).addClass(data.classes.raw.target);
+      data.classes = $.extend(true, {}, Classes, data.classes);
 
-		data.mq         = "(max-width:" + (data.maxWidth === Infinity ? "100000px" : data.maxWidth) + ")";
+      data.target = this.data(Namespace + "-target");
+      data.$target = $(data.target).addClass(data.classes.raw.target);
 
-		// live query for linked to avoid missing new elements
-		var linked      = this.data(Namespace + "-linked");
-		data.linked     = linked ? '[data-' + Namespace + '-linked="' + linked + '"]' : false;
+      data.mq = "(max-width:" + (data.maxWidth === Infinity ? "100000px" : data.maxWidth) + ")";
 
-		// live query for the group to avoid missing new elements
-		var group       = this.data(Namespace + "-group");
-		data.group      = group ? '[data-' + Namespace + '-group="' + group + '"]' : false;
+      // live query for linked to avoid missing new elements
+      var linked = this.data(Namespace + "-linked");
+      data.linked = linked ? '[data-' + Namespace + '-linked="' + linked + '"]' : false;
 
-		data.$swaps     = $().add(this).add(data.$target);
+      // live query for the group to avoid missing new elements
+      var group = this.data(Namespace + "-group");
+      data.group = group ? '[data-' + Namespace + '-group="' + group + '"]' : false;
 
-		this.on(Events.click + data.dotGuid, data, onClick);
-	}
+      data.$swaps = $().add(this).add(data.$target);
 
-	/**
-	 * @method private
-	 * @name postConstruct
-	 * @description Run post build.
-	 * @param data [object] "Instance data"
-	 */
+      this.on(Events.click + data.dotGuid, data, onClick);
+    }
 
-	function postConstruct(data) {
-		if (!data.collapse && data.group && !$(data.group).filter("[data-" + Namespace + "-active]").length) {
-			$(data.group).eq(0).attr("data-" + Namespace + "-active", "true");
-		}
+    /**
+     * @method private
+     * @name postConstruct
+     * @description Run post build.
+     * @param data [object] "Instance data"
+     */
 
-		// Should be activate when enabled
-		data.onEnable = this.data(Namespace + "-active") || false;
+    function postConstruct(data) {
+      if (!data.collapse && data.group && !$(data.group).filter("[data-" + Namespace + "-active]").length) {
+        $(data.group).eq(0).attr("data-" + Namespace + "-active", "true");
+      }
 
-		// Media Query support
-		$.fsMediaquery("bind", data.rawGuid, data.mq, {
-			enter: function() {
-				enable.call(data.$el, data, true);
-			},
-			leave: function() {
-				disable.call(data.$el, data, true);
-			}
-		});
-	}
+      // Should be activate when enabled
+      data.onEnable = this.data(Namespace + "-active") || false;
 
-	/**
-	 * @method private
-	 * @name destruct
-	 * @description Tears down instance.
-	 * @param data [object] "Instance data"
-	 */
+      // Media Query support
+      $.fsMediaquery("bind", data.rawGuid, data.mq, {
+        enter: function() {
+          enable.call(data.$el, data, true);
+        },
+        leave: function() {
+          disable.call(data.$el, data, true);
+        }
+      });
+    }
 
-	function destruct(data) {
-		$.fsMediaquery("unbind", data.rawGuid);
+    /**
+     * @method private
+     * @name destruct
+     * @description Tears down instance.
+     * @param data [object] "Instance data"
+     */
 
-		data.$swaps.removeClass( [data.classes.raw.enabled, data.classes.raw.active].join(" ") )
-				   .off(Events.namespace);
-	}
+    function destruct(data) {
+      $.fsMediaquery("unbind", data.rawGuid);
 
-	/**
-	 * @method
-	 * @name activate
-	 * @description Activate instance.
-	 * @example $(".target").swap("activate");
-	 */
+      data.$swaps.removeClass([data.classes.raw.enabled, data.classes.raw.active].join(" "))
+        .off(Events.namespace);
+    }
 
-	function activate(data, fromLinked) {
-		if (data.enabled && !data.active) {
-			if (data.group && !fromLinked) {
-				// Deactivates grouped instances
-				$(data.group).not(data.$el).not(data.linked)[Plugin.namespaceClean]("deactivate", true);
-			}
+    /**
+     * @method
+     * @name activate
+     * @description Activate instance.
+     * @example $(".target").swap("activate");
+     */
 
-			// index in group
-			var index = (data.group) ? $(data.group).index(data.$el) : null;
+    function activate(data, fromLinked) {
+      if (data.enabled && !data.active) {
+        if (data.group && !fromLinked) {
+          // Deactivates grouped instances
+          $(data.group).not(data.$el).not(data.linked)[Plugin.namespaceClean]("deactivate", true);
+        }
 
-			data.$swaps.addClass(data.classes.raw.active);
+        // index in group
+        var index = (data.group) ? $(data.group).index(data.$el) : null;
 
-			if (!fromLinked) {
-				if (data.linked) {
-					// Linked handles
-					$(data.linked).not(data.$el)[Plugin.namespaceClean]("activate", true);
-				}
-			}
+        data.$swaps.addClass(data.classes.raw.active);
 
-			this.trigger(Events.activate, [index]);
+        if (!fromLinked) {
+          if (data.linked) {
+            // Linked handles
+            $(data.linked).not(data.$el)[Plugin.namespaceClean]("activate", true);
+          }
+        }
 
-			data.active = true;
-		}
-	}
+        this.trigger(Events.activate, [index]);
 
-	/**
-	 * @method
-	 * @name deactivate
-	 * @description Deactivates instance.
-	 * @example $(".target").swap("deactivate");
-	 */
+        data.active = true;
+      }
+    }
 
-	function deactivate(data, fromLinked) {
-		if (data.enabled && data.active) {
-			data.$swaps.removeClass(data.classes.raw.active);
+    /**
+     * @method
+     * @name deactivate
+     * @description Deactivates instance.
+     * @example $(".target").swap("deactivate");
+     */
 
-			if (!fromLinked) {
-				if (data.linked) {
-					// Linked handles
-					$(data.linked).not(data.$el)[Plugin.namespaceClean]("deactivate", true);
-				}
-			}
+    function deactivate(data, fromLinked) {
+      if (data.enabled && data.active) {
+        data.$swaps.removeClass(data.classes.raw.active);
 
-			this.trigger(Events.deactivate);
+        if (!fromLinked) {
+          if (data.linked) {
+            // Linked handles
+            $(data.linked).not(data.$el)[Plugin.namespaceClean]("deactivate", true);
+          }
+        }
 
-			data.active = false;
-		}
-	}
+        this.trigger(Events.deactivate);
 
-	/**
-	 * @method
-	 * @name enable
-	 * @description Enables instance.
-	 * @example $(".target").swap("enable");
-	 */
+        data.active = false;
+      }
+    }
 
-	function enable(data, fromLinked) {
-		if (!data.enabled) {
-			data.enabled = true;
+    /**
+     * @method
+     * @name enable
+     * @description Enables instance.
+     * @example $(".target").swap("enable");
+     */
 
-			data.$swaps.addClass(data.classes.raw.enabled);
+    function enable(data, fromLinked) {
+      if (!data.enabled) {
+        data.enabled = true;
 
-			if (!fromLinked) {
-				// Linked handles
-				$(data.linked).not(data.$el)[Plugin.namespaceClean]("enable");
-			}
+        data.$swaps.addClass(data.classes.raw.enabled);
 
-			this.trigger(Events.enable);
+        if (!fromLinked) {
+          // Linked handles
+          $(data.linked).not(data.$el)[Plugin.namespaceClean]("enable");
+        }
 
-			if (data.onEnable) {
-				data.active = false;
-				activate.call(this, data);
-			} else {
-				data.active = true;
-				deactivate.call(this, data);
-			}
-		}
-	}
+        this.trigger(Events.enable);
 
-	/**
-	 * @method
-	 * @name disable
-	 * @description Disables instance.
-	 * @example $(".target").swap("disable");
-	 */
+        if (data.onEnable) {
+          data.active = false;
+          activate.call(this, data);
+        } else {
+          data.active = true;
+          deactivate.call(this, data);
+        }
+      }
+    }
 
-	function disable(data, fromLinked) {
-		if (data.enabled) {
-			data.enabled = false;
+    /**
+     * @method
+     * @name disable
+     * @description Disables instance.
+     * @example $(".target").swap("disable");
+     */
 
-			data.$swaps.removeClass( [data.classes.raw.enabled, data.classes.raw.active].join(" ") );
+    function disable(data, fromLinked) {
+      if (data.enabled) {
+        data.enabled = false;
 
-			if (!fromLinked) {
-				// Linked handles
-				$(data.linked).not(data.$el)[Plugin.namespaceClean]("disable");
-			}
+        data.$swaps.removeClass([data.classes.raw.enabled, data.classes.raw.active].join(" "));
 
-			this.trigger(Events.disable);
-		}
-	}
+        if (!fromLinked) {
+          // Linked handles
+          $(data.linked).not(data.$el)[Plugin.namespaceClean]("disable");
+        }
 
-	/**
-	 * @method private
-	 * @name onClick
-	 * @description Handles click nav click.
-	 * @param e [object] "Event data"
-	 */
+        this.trigger(Events.disable);
+      }
+    }
 
-	function onClick(e) {
-		Functions.killEvent(e);
+    /**
+     * @method private
+     * @name onClick
+     * @description Handles click nav click.
+     * @param e [object] "Event data"
+     */
 
-		var data = e.data;
+    function onClick(e) {
+      Functions.killEvent(e);
 
-		if (data.active && data.collapse) {
-			deactivate.call(data.$el, data);
-		} else {
-			activate.call(data.$el, data);
-		}
-	}
+      var data = e.data;
 
-	/**
-	 * @plugin
-	 * @name Swap
-	 * @description A jQuery plugin for toggling states.
-	 * @type widget
-	 * @main swap.js
-	 * @dependency jQuery
-	 * @dependency core.js
-	 * @dependency mediaquery.js
-	 */
+      if (data.active && data.collapse) {
+        deactivate.call(data.$el, data);
+      } else {
+        activate.call(data.$el, data);
+      }
+    }
 
-	var Plugin = Formstone.Plugin("swap", {
-			widget: true,
+    /**
+     * @plugin
+     * @name Swap
+     * @description A jQuery plugin for toggling states.
+     * @type widget
+     * @main swap.js
+     * @dependency jQuery
+     * @dependency core.js
+     * @dependency mediaquery.js
+     */
 
-			/**
-			 * @options
-			 * @param collapse [boolean] <true> "Allow swap to collapse it's target"
-			 * @param maxWidth [string] <Infinity> "Width at which to auto-disable plugin"
-			 */
+    var Plugin = Formstone.Plugin("swap", {
+        widget: true,
 
-			defaults: {
-				collapse       : true,
-				maxWidth       : Infinity
-			},
+        /**
+         * @options
+         * @param collapse [boolean] <true> "Allow swap to collapse it's target"
+         * @param maxWidth [string] <Infinity> "Width at which to auto-disable plugin"
+         */
 
-			classes: [
-				"target",
-				"enabled",
-				"active"
-			],
+        defaults: {
+          collapse: true,
+          maxWidth: Infinity
+        },
 
-			/**
-			 * @events
-			 * @event activate.swap "Swap activated"
-			 * @event deactivate.swap "Swap deactivated"
-			 * @event enable.swap "Swap enabled"
-			 * @event disable.swap "Swap diabled"
-			 */
+        classes: [
+          "target",
+          "enabled",
+          "active"
+        ],
 
-			events: {
-				activate      : "activate",
-				deactivate    : "deactivate",
-				enable        : "enable",
-				disable       : "disable"
-			},
+        /**
+         * @events
+         * @event activate.swap "Swap activated"
+         * @event deactivate.swap "Swap deactivated"
+         * @event enable.swap "Swap enabled"
+         * @event disable.swap "Swap diabled"
+         */
 
-			methods: {
-				_construct    : construct,
-				_postConstruct: postConstruct,
-				_destruct     : destruct,
+        events: {
+          activate: "activate",
+          deactivate: "deactivate",
+          enable: "enable",
+          disable: "disable"
+        },
 
-				// Public Methods
+        methods: {
+          _construct: construct,
+          _postConstruct: postConstruct,
+          _destruct: destruct,
 
-				activate      : activate,
-				deactivate    : deactivate,
-				enable        : enable,
-				disable       : disable
-			}
-		}),
+          // Public Methods
 
-		// Localize References
+          activate: activate,
+          deactivate: deactivate,
+          enable: enable,
+          disable: disable
+        }
+      }),
 
-		Namespace     = Plugin.namespace,
-		Classes       = Plugin.classes,
-		Events        = Plugin.events,
-		Functions     = Plugin.functions;
+      // Localize References
 
-})(jQuery, Formstone);
+      Namespace = Plugin.namespace,
+      Classes = Plugin.classes,
+      Events = Plugin.events,
+      Functions = Plugin.functions;
+
+  })
+
+);

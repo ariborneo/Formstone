@@ -1,16 +1,18 @@
 
-	.fs_clearfix() {
-		&:after {
-			clear: both;
-			content: '';
-			display: table;
-		}
-	}
+  .fs_clearfix() {
 
-	.fs_button() {
-		border: none;
+    &:after {
+      clear: both;
+      content: '';
+      display: table;
+    }
+  }
 
-		&:focus {
-			outline: none;
-		}
-	}
+  .fs_button() {
+    border: none;
+    padding: 0;
+
+    &:focus {
+      // outline: none;
+    }
+  }

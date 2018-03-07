@@ -2,17 +2,29 @@
 
 A jQuery plugin for simple access to browser cookies.
 
+<!-- HEADER END -->
+
+<!-- NAV START -->
+
 * [Use](#use)
 * [Options](#options)
 * [Methods](#methods)
 
-## Use 
+<!-- NAV END -->
+
+<!-- DEMO BUTTON -->
+
+<a name="use"></a>
+
+## Using Cookie
+
 
 #### Main
 
 ```markup
 cookie.js
 ```
+
 
 #### Dependencies
 
@@ -44,6 +56,9 @@ To erase an existing cookie, set it to `null`:
 $.cookie(key, null);
 ```
 
+
+<a name="options"></a>
+
 ## Options
 
 Set instance options by passing a valid object at initialization, or to the public `defaults` method.
@@ -53,6 +68,9 @@ Set instance options by passing a valid object at initialization, or to the publ
 | `domain` | `string` | &nbsp; | Cookie domain |
 | `expires` | `int` | `604800000` | Time until cookie expires |
 | `path` | `string` | &nbsp; | Cookie path |
+
+<hr>
+<a name="methods"></a>
 
 ## Methods
 
